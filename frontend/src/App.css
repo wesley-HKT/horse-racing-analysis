@@ -1,0 +1,342 @@
+/* 全局樣式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 頭部樣式 */
+.header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.header-info {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* 內容區域 */
+.content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 警告提示 */
+.alert {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.alert h3 {
+  color: #1890ff;
+  margin-bottom: 0.5rem;
+}
+
+.alert p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* 統計卡片網格 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a237e;
+}
+
+.suffix {
+  font-size: 1rem;
+  color: #666;
+  margin-left: 0.25rem;
+}
+
+.loading {
+  color: #999;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* 主內容區域 */
+.main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 賽事分析 */
+.race-analysis {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.race-analysis h2 {
+  color: #1a237e;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.race-info {
+  color: #666;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.prediction-section {
+  margin-bottom: 1.5rem;
+}
+
+.prediction-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.prediction-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.prediction-rate {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.prediction-details {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 系統狀態 */
+.system-status {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.system-status h2 {
+  color: #1a237e;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.status-item {
+  margin-bottom: 1rem;
+}
+
+.status-item:last-child {
+  margin-bottom: 0;
+}
+
+.status-item span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* 功能預覽 */
+.features {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.features h2 {
+  color: #1a237e;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s;
+}
+
+.feature-card:hover {
+  background: #f0f7ff;
+  border-color: #1890ff;
+  transform: translateY(-2px);
+}
+
+.feature-card h3 {
+  color: #1a237e;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.feature-card p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* 頁腳 */
+.footer {
+  background: #1a237e;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+.footer p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.footer p:first-child {
+  font-weight: 500;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+  
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 動畫效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card, .race-analysis, .system-status, .features {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 滾動條樣式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
