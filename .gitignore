@@ -126,7 +126,6 @@ _site/
 .jekyll-metadata
 
 # 包管理器
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 shrinkwrap.yaml

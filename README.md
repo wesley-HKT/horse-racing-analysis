@@ -181,7 +181,25 @@ MIT License
 - 問題反饋: [GitHub Issues](https://github.com/yourusername/horse-racing-analysis/issues)
 - 功能建議: [GitHub Discussions](https://github.com/yourusername/horse-racing-analysis/discussions)
 
+## 🚀 快速部署
+
+### 自動部署 (推薦)
+```powershell
+# 運行部署助手腳本
+.\setup-github.ps1 -GitHubUsername "你的GitHub用戶名"
+```
+
+### 手動部署步驟
+1. 創建GitHub倉庫: `horse-racing-analysis`
+2. 設置遠程倉庫: `git remote add origin https://github.com/你的用戶名/horse-racing-analysis.git`
+3. 推送代碼: `git push -u origin main`
+4. 啟用GitHub Pages: 倉庫Settings → Pages
+
+### 訪問地址
+- GitHub倉庫: `https://github.com/你的用戶名/horse-racing-analysis`
+- GitHub Pages: `https://你的用戶名.github.io/horse-racing-analysis/`
+
 ## 部署狀態
 
-[![Vercel](https://vercelbadge.vercel.app/api/yourusername/horse-racing-analysis)](https://horse-racing-analysis.vercel.app)
-[![GitHub Actions](https://github.com/yourusername/horse-racing-analysis/workflows/CI/CD/badge.svg)](https://github.com/yourusername/horse-racing-analysis/actions)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-部署中-blue)](https://你的用戶名.github.io/horse-racing-analysis/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-已配置-green)](https://github.com/你的用戶名/horse-racing-analysis/actions)
