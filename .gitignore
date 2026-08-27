@@ -1,0 +1,137 @@
+# 依賴文件
+node_modules/
+venv/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 日誌文件
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# 運行時數據
+*.pid
+*.seed
+*.pid.lock
+
+# 構建輸出
+dist/
+build/
+out/
+*.tsbuildinfo
+.next/
+.nuxt/
+.cache/
+
+# 數據庫
+*.db
+*.sqlite
+*.sqlite3
+
+# 備份文件
+*.bak
+*.backup
+*.old
+*.orig
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 系統文件
+Thumbs.db
+
+# 測試覆蓋率
+coverage/
+.nyc_output/
+
+# 生產環境配置
+config/production.json
+config/production.yml
+
+# 敏感數據
+secrets.json
+credentials.json
+*.key
+*.pem
+
+# 前端特定
+.eslintcache
+.stylelintcache
+
+# 後端特定
+*.egg-info/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 機器學習模型
+*.pkl
+*.joblib
+*.h5
+*.onnx
+
+# 數據集
+datasets/
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.feather
+
+# 緩存
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Docker
+docker-compose.override.yml
+
+# 臨時文件
+temp/
+tmp/
+
+# 文檔
+_site/
+.sass-cache/
+.jekyll-metadata
+
+# 包管理器
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+shrinkwrap.yaml
+
+# 前端構建
+public/build/
+public/static/
+!public/static/.gitkeep
