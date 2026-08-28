@@ -1,0 +1,86 @@
+{
+  "title": "RacingIQ Recent Race Snapshot",
+  "description": "Versioned normalized contract for locally reviewed experimental recent-race snapshots.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at_utc", "as_of_utc", "data_status", "source", "freshness", "meetings"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "as_of_utc": { "type": "string", "format": "date-time" },
+    "data_status": { "enum": ["snapshot", "empty"] },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "connector", "connector_version", "upstream_package_version", "official_api", "license_status", "retrieved_at_utc", "content_sha256"],
+      "properties": {
+        "provider": { "type": "string" },
+        "connector": { "type": "string" },
+        "connector_version": { "type": "string" },
+        "upstream_package_version": { "type": "string" },
+        "official_api": { "const": false },
+        "license_status": { "const": "review-required" },
+        "retrieved_at_utc": { "type": "string", "format": "date-time" },
+        "content_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "latest_meeting_date", "age_hours", "max_age_hours"],
+      "properties": {
+        "status": { "enum": ["current", "recent", "stale", "empty"] },
+        "latest_meeting_date": { "type": ["string", "null"], "format": "date" },
+        "age_hours": { "type": ["number", "null"], "minimum": 0 },
+        "max_age_hours": { "type": "number", "minimum": 1 }
+      }
+    },
+    "meetings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["meeting_id", "meeting_date", "venue_code", "venue_name_en", "venue_name_zh", "country_code", "status", "total_races", "races"],
+        "properties": {
+          "meeting_id": { "type": "string", "minLength": 1 },
+          "meeting_date": { "type": "string" },
+          "venue_code": { "type": "string" },
+          "venue_name_en": { "type": "string" },
+          "venue_name_zh": { "type": "string" },
+          "country_code": { "type": "string" },
+          "status": { "type": "string" },
+          "total_races": { "type": ["number", "null"] },
+          "races": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["race_id", "race_number", "status", "race_name_en", "race_name_zh", "scheduled_time", "distance_m", "runners"],
+              "properties": {
+                "race_id": { "type": "string" },
+                "race_number": { "type": ["number", "null"] },
+                "status": { "type": "string" },
+                "race_name_en": { "type": "string" },
+                "race_name_zh": { "type": "string" },
+                "scheduled_time": { "type": ["string", "null"] },
+                "distance_m": { "type": ["number", "null"] },
+                "runners": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["runner_id", "horse_name_en", "horse_name_zh", "status", "finish_position"],
+                    "properties": {
+                      "runner_id": { "type": "string" },
+                      "horse_name_en": { "type": "string" },
+                      "horse_name_zh": { "type": "string" },
+                      "status": { "type": "string" },
+                      "finish_position": { "type": ["number", "null"] }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

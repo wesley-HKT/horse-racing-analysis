@@ -291,3 +291,45 @@ button { cursor: pointer; }
   .segmented-control { width: 100%; }.segmented-control button { flex: 1; }.table-actions .secondary-button { width: 100%; }
   .provenance-tags { flex-wrap: wrap; }
 }
+
+/* Experimental recent-race snapshots */
+.recent-source-badge { display: inline-flex; align-items: center; gap: 9px; min-height: 35px; padding: 8px 12px; color: var(--amber); border: 1px solid rgba(240, 188, 106, 0.24); border-radius: 8px; background: rgba(240, 188, 106, 0.08); font: 700 12px var(--mono); white-space: nowrap; }
+.recent-source-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px rgba(240, 188, 106, 0.1); }
+.recent-empty-state { min-height: 185px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 22px; padding: 30px; border-color: rgba(240, 188, 106, 0.18); }
+.recent-empty-state--error { border-color: rgba(242, 135, 147, 0.22); }
+.recent-empty-icon { width: 62px; height: 62px; display: grid; place-items: center; color: var(--amber); border: 1px solid rgba(240, 188, 106, 0.2); border-radius: 50%; background: rgba(240, 188, 106, 0.08); font: 750 26px var(--mono); }
+.recent-empty-state--error .recent-empty-icon { color: var(--red); border-color: rgba(242, 135, 147, 0.2); background: rgba(242, 135, 147, 0.08); }
+.recent-empty-state h2 { margin: 0 0 10px; font-size: 24px; }
+.recent-empty-state p:last-child { max-width: 880px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+.recent-provenance { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 25px; border-color: rgba(104, 174, 252, 0.2); }
+.recent-provenance h2 { margin: 0 0 8px; font-size: 23px; }
+.recent-provenance p:last-child { margin: 0; color: var(--muted); font-size: 14px; }
+.recent-provenance code { color: var(--blue); font: 700 13px var(--mono); }
+.recent-meeting { padding: 0; overflow: hidden; }
+.recent-meeting-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px; border-bottom: 1px solid var(--line); }
+.recent-meeting-header h2 { margin: 0 0 7px; font-size: 24px; }
+.recent-meeting-header p:last-child { margin: 0; color: var(--muted); font-size: 14px; }
+.recent-status-chip { padding: 7px 10px; color: var(--blue); border: 1px solid rgba(104, 174, 252, 0.2); border-radius: 7px; background: rgba(104, 174, 252, 0.08); font: 700 12px var(--mono); }
+.recent-race-list { display: grid; gap: 0; }
+.recent-race-card { border-bottom: 1px solid var(--line); }
+.recent-race-card:last-child { border-bottom: 0; }
+.recent-race-heading { display: flex; align-items: center; gap: 15px; padding: 20px 25px; background: rgba(104, 174, 252, 0.035); }
+.recent-race-heading > span { width: 44px; height: 44px; display: grid; place-items: center; flex: 0 0 44px; color: #07120e; border-radius: 10px; background: var(--blue); font: 800 14px var(--mono); }
+.recent-race-heading div { display: grid; gap: 4px; }
+.recent-race-heading strong { color: #e8eff7; font-size: 17px; }
+.recent-race-heading small { color: var(--muted); font-size: 13px; }
+.recent-result-table { width: 100%; min-width: 920px; border-collapse: collapse; }
+.recent-result-table th { padding: 13px 18px; color: #66768a; background: rgba(6, 10, 15, 0.28); font: 700 12px var(--mono); text-align: left; }
+.recent-result-table td { padding: 15px 18px; color: #aebac7; border-top: 1px solid rgba(180, 200, 222, 0.08); font-size: 14px; }
+.recent-result-table td > strong, .recent-result-table td > small { display: block; }
+.recent-result-table td > small { margin-top: 4px; color: #68788a; font-size: 12px; }
+.recent-podium { color: var(--mint); font: 800 16px var(--mono); }
+
+@media (max-width: 760px) {
+  .recent-source-badge { margin-top: 20px; white-space: normal; }
+  .recent-empty-state { grid-template-columns: 1fr; padding: 22px; }
+  .recent-empty-icon { width: 52px; height: 52px; }
+  .recent-provenance, .recent-meeting-header { display: block; }
+  .recent-provenance code, .recent-status-chip { display: inline-block; margin-top: 18px; }
+  .recent-race-heading { padding: 18px 20px; }
+}

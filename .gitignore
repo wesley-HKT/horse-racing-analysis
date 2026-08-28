@@ -135,3 +135,6 @@ shrinkwrap.yaml
 public/build/
 public/static/
 !public/static/.gitkeep
+
+# Explicitly reviewed local recent-race frontend export (never commit provider data)
+frontend/public/data/recent-races.snapshot.json

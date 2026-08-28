@@ -1,0 +1,13 @@
+{
+  "name": "racingiq-recent-races-connector",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-only experimental connector for normalized HK race snapshots",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch.mjs"
+  },
+  "dependencies": {
+    "hkjc-api": "1.0.5"
+  }
+}

@@ -1,7 +1,8 @@
 import { type ReactNode, useMemo, useState } from 'react'
+import RecentRaces from './pages/RecentRaces/RecentRaces'
 import './App.css'
 
-type ViewId = 'command' | 'race-lab' | 'backtest' | 'live' | 'data'
+type ViewId = 'command' | 'race-lab' | 'recent-races' | 'backtest' | 'live' | 'data'
 type MarketMode = 'win' | 'place'
 type Confidence = 'High' | 'Medium' | 'Watch'
 
@@ -47,6 +48,7 @@ type Runner = {
 const navigation: NavigationItem[] = [
   { id: 'command', label: 'Command Centre', subtitle: '賽日總覽', icon: '⌂' },
   { id: 'race-lab', label: 'Race Lab', subtitle: '單場深度分析', icon: '◎' },
+  { id: 'recent-races', label: 'Recent Races', subtitle: '近期賽事快照', icon: '↻' },
   { id: 'backtest', label: 'Backtest Studio', subtitle: '歷史驗證', icon: '↗' },
   { id: 'live', label: 'Live Monitor', subtitle: '即時資料狀態', icon: '◉' },
   { id: 'data', label: 'Data Vault', subtitle: '資料治理', icon: '▦' },
@@ -502,6 +504,7 @@ function App() {
   const content = {
     command: <CommandCentre selectedRaceId={selectedRaceId} onSelectRace={setSelectedRaceId} openRaceLab={() => setActiveView('race-lab')} />,
     'race-lab': <RaceLab selectedRaceId={selectedRaceId} onSelectRace={setSelectedRaceId} />,
+    'recent-races': <RecentRaces />,
     backtest: <BacktestStudio />,
     live: <LiveMonitor />,
     data: <DataVault />,
@@ -518,7 +521,7 @@ function App() {
         <nav>
           {navigation.map((item) => (
             <button className={activeView === item.id ? 'active' : ''} key={item.id} onClick={() => setActiveView(item.id)} type="button">
-              <span className="nav-symbol">{item.icon}</span><span className="nav-copy"><strong>{item.label}</strong><small>{item.subtitle}</small></span>{item.id === 'live' && <i className="offline-dot" />}
+              <span className="nav-symbol">{item.icon}</span><span className="nav-copy"><strong>{item.label}</strong><small>{item.subtitle}</small></span>{(item.id === 'live' || item.id === 'recent-races') && <i className="offline-dot" />}
             </button>
           ))}
         </nav>
