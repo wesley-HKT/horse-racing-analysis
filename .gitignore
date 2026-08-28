@@ -101,6 +101,7 @@ wheels/
 
 # 數據集
 datasets/
+/.local-research/
 data/raw/
 data/processed/
 *.csv

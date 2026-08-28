@@ -130,10 +130,24 @@ horse-racing-analysis/
 
 ## 數據源
 
-- 香港賽馬會歷史數據
-- 國際賽馬數據API
-- 實時賠率數據流
-- 天氣和場地數據
+目前公開網站仍使用展示資料。可重現的本機歷史研究流程已加入，詳見 [RESEARCH_DATA.md](RESEARCH_DATA.md)。
+
+- 歷史研究資料：固定第三方研究來源，以本機 SQLite 匯入與回測
+- 原始資料、SQLite 與產生報告：僅存於 Git 忽略的 `/.local-research/`
+- 即時資料：尚未接入；需要合法供應商 API 與獨立後端服務
+- 天氣和場地數據：尚未接入
+
+## 本機歷史回測
+
+```powershell
+# 從專案根目錄執行
+python -m backend.cli.research_data all
+
+# 只執行安全的合成資料測試
+python -m unittest backend.tests.test_research_pipeline -v
+```
+
+目前回測是使用歷史馬匹勝率的時間順序基準，並非即時 AI 預測或投注建議。完整資料範圍、授權注意事項與結果請見 [RESEARCH_DATA.md](RESEARCH_DATA.md)。
 
 ## 開發指南
 
