@@ -68,6 +68,10 @@ python -m backend.cli.research_data download
 python -m backend.cli.research_data inspect
 python -m backend.cli.research_data import
 python -m backend.cli.research_data backtest
+
+# 匯出經驗證的前端研究摘要（需先完成 import 與 backtest）
+python -m backend.cli.research_data export
+python -m backend.cli.research_data export --export-frontend --confirm-publication-reviewed
 ```
 
 完整流程與授權限制請見 [RESEARCH_DATA.md](RESEARCH_DATA.md)。
@@ -129,6 +133,9 @@ npm run build --prefix frontend
 
 # 歷史研究合成測試
 python -m unittest backend.tests.test_research_pipeline -v
+
+# 近期連接器正規化測試
+npm test --prefix tools/recent-races
 
 # 近期連接器安全閘門（預期拒絕網絡）
 npm run fetch --prefix tools/recent-races

@@ -297,8 +297,10 @@ button { cursor: pointer; }
 .recent-source-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px rgba(240, 188, 106, 0.1); }
 .recent-empty-state { min-height: 185px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 22px; padding: 30px; border-color: rgba(240, 188, 106, 0.18); }
 .recent-empty-state--error { border-color: rgba(242, 135, 147, 0.22); }
+.recent-empty-state--warning { border-color: rgba(240, 188, 106, 0.28); }
 .recent-empty-icon { width: 62px; height: 62px; display: grid; place-items: center; color: var(--amber); border: 1px solid rgba(240, 188, 106, 0.2); border-radius: 50%; background: rgba(240, 188, 106, 0.08); font: 750 26px var(--mono); }
 .recent-empty-state--error .recent-empty-icon { color: var(--red); border-color: rgba(242, 135, 147, 0.2); background: rgba(242, 135, 147, 0.08); }
+.recent-empty-state--warning .recent-empty-icon { color: var(--amber); border-color: rgba(240, 188, 106, 0.24); background: rgba(240, 188, 106, 0.1); }
 .recent-empty-state h2 { margin: 0 0 10px; font-size: 24px; }
 .recent-empty-state p:last-child { max-width: 880px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
 .recent-provenance { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 25px; border-color: rgba(104, 174, 252, 0.2); }

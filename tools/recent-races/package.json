@@ -5,7 +5,8 @@
   "description": "Local-only experimental connector for normalized HK race snapshots",
   "type": "module",
   "scripts": {
-    "fetch": "node fetch.mjs"
+    "fetch": "node fetch.mjs",
+    "test": "node --test normalize.test.mjs"
   },
   "dependencies": {
     "hkjc-api": "1.0.5"

@@ -1,0 +1,48 @@
+{
+  "title": "RacingIQ Research Summary",
+  "description": "Versioned contract for locally verified historical research summaries exported to the frontend.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at_utc", "data_status", "source", "metrics", "baseline", "limitations"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "data_status": { "enum": ["verified", "empty"] },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "source_commit", "official_api", "license_status"],
+      "properties": {
+        "provider": { "type": "string" },
+        "source_commit": { "type": "string", "minLength": 8 },
+        "official_api": { "const": false },
+        "license_status": { "const": "review-required" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["records", "races", "top_one_hit_rate", "top_three_hit_rate", "period"],
+      "properties": {
+        "records": { "type": "integer", "minimum": 0 },
+        "races": { "type": "integer", "minimum": 0 },
+        "top_one_hit_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "top_three_hit_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "period": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": "string" },
+            "end": { "type": "string" }
+          }
+        }
+      }
+    },
+    "baseline": { "type": "string" },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

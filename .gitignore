@@ -138,3 +138,4 @@ public/static/
 
 # Explicitly reviewed local recent-race frontend export (never commit provider data)
 frontend/public/data/recent-races.snapshot.json
+frontend/public/data/research-summary.json

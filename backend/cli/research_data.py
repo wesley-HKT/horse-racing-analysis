@@ -14,9 +14,11 @@ from pathlib import Path
 
 from backend.research_pipeline import (
     download_source,
+    export_frontend_research_summary,
     import_hong_kong_performances,
     inspect_source,
     research_root,
+    repository_root,
     run_historical_baseline_backtest,
 )
 
@@ -33,6 +35,17 @@ def build_parser() -> argparse.ArgumentParser:
     subcommands.add_parser("inspect", help="產生來源版本、雜湊與欄位清單")
     subcommands.add_parser("import", help="匯入香港賽果至本機 SQLite")
     subcommands.add_parser("backtest", help="執行無前視偏差的歷史基準回測")
+    export = subcommands.add_parser("export", help="匯出經驗證的前端研究摘要")
+    export.add_argument(
+        "--export-frontend",
+        action="store_true",
+        help="同時寫入 frontend/public/data/research-summary.json（需人工審閱）",
+    )
+    export.add_argument(
+        "--confirm-publication-reviewed",
+        action="store_true",
+        help="確認已完成資料權利與內容審閱",
+    )
     subcommands.add_parser("all", help="依序下載、檢查、匯入並回測")
     return parser
 
@@ -57,6 +70,14 @@ def main() -> int:
         return 0
     if arguments.command == "backtest":
         emit(run_historical_baseline_backtest(root))
+        return 0
+    if arguments.command == "export":
+        destination = None
+        if arguments.export_frontend:
+            if not arguments.confirm_publication_reviewed:
+                raise SystemExit("Frontend export requires --confirm-publication-reviewed.")
+            destination = repository_root() / "frontend" / "public" / "data" / "research-summary.json"
+        emit(export_frontend_research_summary(root, destination))
         return 0
 
     download_source(root)
