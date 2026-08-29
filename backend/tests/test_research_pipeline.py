@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 from backend.research_pipeline import (
+    build_frontend_research_summary,
     import_hong_kong_performances,
     inspect_source,
     run_historical_baseline_backtest,
@@ -64,6 +65,23 @@ class ResearchPipelineTests(unittest.TestCase):
             report = run_historical_baseline_backtest(root)
             self.assertGreater(report["metrics"]["evaluated_races"], 0)
             self.assertIsNotNone(report["metrics"]["top_1_winner_hit_rate"])
+
+    def test_frontend_research_summary_export(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.make_source(root)
+            inspect_source(root)
+            import_hong_kong_performances(root)
+            run_historical_baseline_backtest(root)
+            summary = build_frontend_research_summary(root)
+            self.assertEqual(summary["schema_version"], "1.0.0")
+            self.assertEqual(summary["data_status"], "verified")
+            self.assertFalse(summary["source"]["official_api"])
+            self.assertEqual(summary["source"]["license_status"], "review-required")
+            self.assertGreater(summary["metrics"]["records"], 0)
+            self.assertGreater(summary["metrics"]["races"], 0)
+            self.assertIsNotNone(summary["metrics"]["top_one_hit_rate"])
+            self.assertIsNotNone(summary["metrics"]["top_three_hit_rate"])
 
 
 if __name__ == "__main__":

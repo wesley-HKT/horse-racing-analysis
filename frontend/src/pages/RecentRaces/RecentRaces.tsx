@@ -107,6 +107,16 @@ export default function RecentRaces() {
 
       {result.status === 'ready' && summary && (
         <>
+          {result.snapshot.freshness.status === 'stale' && (
+            <section className="surface recent-empty-state recent-empty-state--warning">
+              <span className="recent-empty-icon">!</span>
+              <div>
+                <p className="eyebrow">SNAPSHOT STALE</p>
+                <h2>快照已超出新鮮度門檻</h2>
+                <p>最新 meeting 日期為 {displayDate(result.snapshot.freshness.latest_meeting_date)}，已超過 {result.snapshot.freshness.max_age_hours} 小時的新鮮度限制。以下內容僅供審閱，不應視為即時賽果。</p>
+              </div>
+            </section>
+          )}
           <section className="recent-provenance surface">
             <div><p className="eyebrow">SOURCE & FRESHNESS</p><h2>{result.snapshot.source.provider}</h2><p>擷取：{displayDate(result.snapshot.source.retrieved_at_utc)} · 新鮮度：{result.snapshot.freshness.status} · 授權：{result.snapshot.source.license_status}</p></div>
             <code>{result.snapshot.source.content_sha256.slice(0, 16)}…</code>

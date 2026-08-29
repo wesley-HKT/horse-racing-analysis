@@ -53,9 +53,12 @@ python -m backend.cli.research_data all
 └── reports/
     ├── import-summary.json
     └── backtest-summary.json
+    └── frontend-research-summary.json
 ```
 
 `normalized.sqlite` 的 `runners` 表包含賽事日期、賽事編號、馬匹、騎師、練馬師、檔位、負磅、最終賠率、名次、路程、跑道、場地狀況和班次等欄位。
+
+完成 `import` 與 `backtest` 後，可執行 `export` 產生 `frontend-research-summary.json`。若要在本機前端載入，需額外加上 `--export-frontend --confirm-publication-reviewed`，並在 `frontend/.env.local` 設定 `VITE_ENABLE_RESEARCH_SUMMARY=true`。
 
 ## 目前回測方法
 

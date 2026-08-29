@@ -384,3 +384,74 @@ def run_historical_baseline_backtest(root: Path) -> dict[str, Any]:
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return report
+
+
+RESEARCH_SUMMARY_SCHEMA_VERSION = "1.0.0"
+
+
+def build_frontend_research_summary(root: Path) -> dict[str, Any]:
+    """Build a versioned frontend-safe research summary from local reports.
+
+    The export only contains aggregated metrics and provenance metadata. Raw records
+    never leave the ignored local research directory.
+    """
+    import_summary_path = root / "reports" / "import-summary.json"
+    backtest_summary_path = root / "reports" / "backtest-summary.json"
+    if not import_summary_path.is_file():
+        raise FileNotFoundError("尚未匯入資料；請先執行 import 子命令")
+    if not backtest_summary_path.is_file():
+        raise FileNotFoundError("尚未執行回測；請先執行 backtest 子命令")
+
+    import_summary = json.loads(import_summary_path.read_text(encoding="utf-8"))
+    backtest_summary = json.loads(backtest_summary_path.read_text(encoding="utf-8"))
+    metrics = backtest_summary.get("metrics", {})
+    top_one = metrics.get("top_1_winner_hit_rate")
+    top_three = metrics.get("top_3_contains_winner_rate")
+    if top_one is None or top_three is None:
+        raise RuntimeError("回測摘要缺少必要的命中率指標")
+
+    period = backtest_summary.get("period") or import_summary.get("period") or {}
+    start = period.get("start")
+    end = period.get("end")
+    if not start or not end:
+        raise RuntimeError("回測摘要缺少資料期間")
+
+    return {
+        "schema_version": RESEARCH_SUMMARY_SCHEMA_VERSION,
+        "generated_at_utc": datetime.now(UTC).isoformat(),
+        "data_status": "verified",
+        "source": {
+            "provider": SOURCE_REPOSITORY,
+            "source_commit": str(import_summary.get("source_commit") or ""),
+            "official_api": False,
+            "license_status": "review-required",
+        },
+        "metrics": {
+            "records": int(import_summary.get("runners_imported") or 0),
+            "races": int(import_summary.get("races_imported") or 0),
+            "top_one_hit_rate": float(top_one),
+            "top_three_hit_rate": float(top_three),
+            "period": {"start": str(start), "end": str(end)},
+        },
+        "baseline": str(backtest_summary.get("baseline") or ""),
+        "limitations": list(backtest_summary.get("limitations") or []),
+    }
+
+
+def export_frontend_research_summary(root: Path, destination: Path | None = None) -> dict[str, Any]:
+    """Write the frontend research summary to the local reports directory."""
+    summary = build_frontend_research_summary(root)
+    reports_directory = root / "reports"
+    reports_directory.mkdir(parents=True, exist_ok=True)
+    report_path = reports_directory / "frontend-research-summary.json"
+    report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    if destination is not None:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    return {
+        "summary": summary,
+        "report_path": str(report_path),
+        "frontend_path": str(destination) if destination is not None else None,
+    }

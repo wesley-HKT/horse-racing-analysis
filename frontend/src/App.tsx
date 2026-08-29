@@ -1,5 +1,7 @@
 import { type ReactNode, useMemo, useState } from 'react'
+import { useResearchSummary } from './hooks/useResearchSummary'
 import RecentRaces from './pages/RecentRaces/RecentRaces'
+import type { HistoricalMetrics } from './types/researchSummary'
 import './App.css'
 
 type ViewId = 'command' | 'race-lab' | 'recent-races' | 'backtest' | 'live' | 'data'
@@ -69,17 +71,9 @@ const runners: Runner[] = [
   { number: 11, draw: 12, name: '紅運先鋒', jockey: '田泰安', trainer: '大衛希斯', rating: 78, weight: 122, odds: 18.0, win: 6.3, place: 20.4, edge: 0.7, pace: 68, track: 63, form: '7 · 9 · 4 · 8 · 5', confidence: 'Watch', signal: '資料不足', note: '外檔、同程樣本及近期狀態均降低模型信心。' },
 ]
 
-const historicalMetrics = {
-  records: 273_993,
-  races: 22_731,
-  topOne: 14.54,
-  topThree: 34.85,
-  period: '1977-05-07 — 2018-06-27',
-  commit: '70b86e9944a0',
-}
-
 const formatPercent = (value: number) => `${value.toFixed(1)}%`
 const formatInteger = (value: number) => new Intl.NumberFormat('en-US').format(value)
+const formatHitRate = (value: number) => `${value.toFixed(2)}%`
 
 function DataBadge({ type }: { type: 'historical' | 'simulation' | 'offline' }) {
   const labels = {
@@ -194,7 +188,7 @@ function RunnerTable({ marketMode, setMarketMode, selectedRunner, setSelectedRun
   )
 }
 
-function CommandCentre({ selectedRaceId, onSelectRace, openRaceLab }: { selectedRaceId: string; onSelectRace: (raceId: string) => void; openRaceLab: () => void }) {
+function CommandCentre({ historicalMetrics, selectedRaceId, onSelectRace, openRaceLab }: { historicalMetrics: HistoricalMetrics; selectedRaceId: string; onSelectRace: (raceId: string) => void; openRaceLab: () => void }) {
   const selectedRace = races.find((race) => race.id === selectedRaceId) ?? races[0]
   return (
     <div className="view-stack">
@@ -213,8 +207,8 @@ function CommandCentre({ selectedRaceId, onSelectRace, openRaceLab }: { selected
       <section className="metric-grid four-up">
         <MetricCard label="歷史出賽紀錄" value={formatInteger(historicalMetrics.records)} detail="已正規化香港馬匹出賽紀錄" tone="blue" footnote="真實歷史研究資料" />
         <MetricCard label="可評估賽事" value={formatInteger(historicalMetrics.races)} detail="通過最低歷史資料門檻" tone="positive" footnote="無前視時間順序回測" />
-        <MetricCard label="Top-1 命中" value="14.54%" detail="歷史勝率平滑基準" footnote="不是正式 AI 模型" />
-        <MetricCard label="Top-3 含冠軍" value="34.85%" detail="三匹最高評分馬包含冠軍" tone="warning" footnote="截至 2018 年資料" />
+        <MetricCard label="Top-1 命中" value={formatHitRate(historicalMetrics.topOne)} detail="歷史勝率平滑基準" footnote="不是正式 AI 模型" />
+        <MetricCard label="Top-3 含冠軍" value={formatHitRate(historicalMetrics.topThree)} detail="三匹最高評分馬包含冠軍" tone="warning" footnote="截至 2018 年資料" />
       </section>
 
       <section className="command-grid">
@@ -336,8 +330,8 @@ function RaceLab({ selectedRaceId, onSelectRace }: { selectedRaceId: string; onS
   )
 }
 
-function BacktestStudio() {
-  const bars = [10.8, 12.4, 13.2, 14.1, 13.8, 15.2, 14.7, 15.8, 14.9, 14.5, 15.1, 14.54]
+function BacktestStudio({ historicalMetrics }: { historicalMetrics: HistoricalMetrics }) {
+  const bars = [10.8, 12.4, 13.2, 14.1, 13.8, 15.2, 14.7, 15.8, 14.9, 14.5, 15.1, historicalMetrics.topOne]
   return (
     <div className="view-stack">
       <header className="page-header">
@@ -353,8 +347,8 @@ function BacktestStudio() {
       <section className="metric-grid four-up">
         <MetricCard label="歷史出賽紀錄" value={formatInteger(historicalMetrics.records)} detail="正規化香港賽事 runners" tone="blue" />
         <MetricCard label="評估賽事" value={formatInteger(historicalMetrics.races)} detail="符合最低歷史門檻" tone="positive" />
-        <MetricCard label="Top-1 勝出命中" value="14.54%" detail="模型第一名實際勝出" />
-        <MetricCard label="Top-3 含冠軍" value="34.85%" detail="前三評分包含冠軍" tone="warning" />
+        <MetricCard label="Top-1 勝出命中" value={formatHitRate(historicalMetrics.topOne)} detail="模型第一名實際勝出" />
+        <MetricCard label="Top-3 含冠軍" value={formatHitRate(historicalMetrics.topThree)} detail="前三評分包含冠軍" tone="warning" />
       </section>
 
       <section className="backtest-grid">
@@ -364,7 +358,7 @@ function BacktestStudio() {
             <div className="chart-y"><span>18%</span><span>12%</span><span>6%</span><span>0%</span></div>
             <div className="bar-series">{bars.map((bar, index) => <div key={index}><i style={{ height: `${bar * 4.2}px` }} /><span>{index + 1}</span></div>)}</div>
           </div>
-          <div className="chart-legend"><span><i className="legend-mint" />示意滾動視窗</span><span><i className="legend-line" />已驗證總體 14.54%</span></div>
+          <div className="chart-legend"><span><i className="legend-mint" />示意滾動視窗</span><span><i className="legend-line" />已驗證總體 {formatHitRate(historicalMetrics.topOne)}</span></div>
         </article>
 
         <article className="surface validation-card">
@@ -445,7 +439,7 @@ function LiveMonitor() {
   )
 }
 
-function DataVault() {
+function DataVault({ historicalMetrics }: { historicalMetrics: HistoricalMetrics }) {
   return (
     <div className="view-stack">
       <header className="page-header">
@@ -499,15 +493,16 @@ function DataVault() {
 function App() {
   const [activeView, setActiveView] = useState<ViewId>('command')
   const [selectedRaceId, setSelectedRaceId] = useState(races[0].id)
+  const { metrics: historicalMetrics } = useResearchSummary()
   const selectedNavigation = useMemo(() => navigation.find((item) => item.id === activeView) ?? navigation[0], [activeView])
 
   const content = {
-    command: <CommandCentre selectedRaceId={selectedRaceId} onSelectRace={setSelectedRaceId} openRaceLab={() => setActiveView('race-lab')} />,
+    command: <CommandCentre historicalMetrics={historicalMetrics} selectedRaceId={selectedRaceId} onSelectRace={setSelectedRaceId} openRaceLab={() => setActiveView('race-lab')} />,
     'race-lab': <RaceLab selectedRaceId={selectedRaceId} onSelectRace={setSelectedRaceId} />,
     'recent-races': <RecentRaces />,
-    backtest: <BacktestStudio />,
+    backtest: <BacktestStudio historicalMetrics={historicalMetrics} />,
     live: <LiveMonitor />,
-    data: <DataVault />,
+    data: <DataVault historicalMetrics={historicalMetrics} />,
   }[activeView]
 
   return (
